@@ -14,13 +14,47 @@ multi_obj = multi_yield()
 for my_string in multi_obj:
     print(my_string)
 
-# последовательность из квадратов чисел от 1 до N (1 ** 2, 2 ** 2, 3 **2 и так далее).(Генератор)
+# последовательность из квадратов чисел от 1 до N (1 ** 2, 2 ** 2, 3 **2 и так далее).
 
-def multi_yield(limit):
-     for i in range(1, limit+1):
-         yield i ** 2
+class MySquares:
+    """
+    класс-итератор
+    """
 
-     
-multi_obj = multi_yield(5)
-for my_string in multi_obj:
-    print(my_string)
+    def __iter__(self):
+        return self
+
+    def __init__(self, limit):
+        self.limit = limit
+        self.counter = 0
+
+    def __next__(self):
+        if self.counter < self.limit:
+            self.counter += 1
+            return self.counter ** 2
+        else:
+            raise StopIteration
+
+
+my_squares = MySquares(5)
+for val in my_squares:
+    print(val)
+
+
+def squares_gen(limit):
+    """
+    функция-генератор
+    """
+    for i in range(1, limit + 1):
+        yield i ** 2
+
+
+res_squares_gen = squares_gen(5)
+for cur_square_val in res_squares_gen:
+    print(cur_square_val)
+
+# генераторное выражение
+gen_exp = (i ** 2 for i in range(1, 6))
+for cur_val in gen_exp:
+    print(cur_val)
+
